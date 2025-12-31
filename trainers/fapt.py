@@ -308,6 +308,25 @@ class FAPT(TrainerX):
             self.update_lr()
 
         return loss_summary
+    
+    def forward_backward_fapt(self, batch_dict):
+        batch, embedding_adv = batch_dict['batch'], batch_dict['images_adv']
+        label = batch["label"].to(self.device)
+
+        output = self.model.forward_embedding(embedding_adv)
+        loss_adv = torch.nn.CrossEntropyLoss()(output, label)
+        loss = loss_adv
+        self.model_backward_and_update(loss)
+
+        loss_summary = {
+            "loss": loss.item(),
+            "acc": compute_accuracy(output, label)[0].item(),
+        }
+
+        if (self.batch_idx + 1) == self.num_batches:
+            self.update_lr()
+
+        return loss_summary
 
     def forward_backward(self, batch):
         image, label = self.parse_batch_train(batch)
