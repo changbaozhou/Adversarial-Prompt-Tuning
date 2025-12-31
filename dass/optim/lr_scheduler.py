@@ -19,7 +19,18 @@ class _BaseWarmupScheduler(_LRScheduler):
     ):
         self.successor = successor
         self.warmup_epoch = warmup_epoch
-        super().__init__(optimizer, last_epoch, verbose)
+        
+        # super().__init__(optimizer, last_epoch, verbose)
+
+        # 兼容不同 PyTorch 版本的调用方式
+        try:
+            # 新版本 PyTorch 的调用方式
+            super().__init__(optimizer, last_epoch=last_epoch, verbose=verbose)
+        except TypeError:
+            # 旧版本 PyTorch 的调用方式
+            super().__init__(optimizer, last_epoch)
+            if verbose:
+                print(f"Warning: verbose flag is not supported in this PyTorch version")
 
     def get_lr(self):
         raise NotImplementedError

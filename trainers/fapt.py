@@ -248,7 +248,7 @@ class CustomCLIP(nn.Module):
 
 
 @TRAINER_REGISTRY.register()
-class AdvPT(TrainerX):
+class FAPT(TrainerX):
 
     def check_cfg(self, cfg):
         assert cfg.TRAINER.ADV.PREC in ["fp16", "fp32", "amp"]

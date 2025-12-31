@@ -1,6 +1,8 @@
 import argparse
 import torch
 
+import os
+
 from dass.utils import setup_logger, set_random_seed, collect_env_info
 from dass.config import get_cfg_default
 from dass.engine import build_trainer
@@ -144,7 +146,7 @@ def main(args):
         trainer.test()
         print('---------------------------------------------------')
         print('robust acc:')
-        trainer.before_adv_test(path, args.white_attack)
+        trainer.before_adv_test(args.path, args.white_attack)
         trainer.test_adv()
         return
 
@@ -172,7 +174,7 @@ def main(args):
         trainer.test()
         print('---------------------------------------------------')
         print('robust acc:')
-        trainer.before_adv_test(path, args.white_attack)
+        trainer.before_adv_test(args.path, args.white_attack)
         trainer.test_adv()
 
 

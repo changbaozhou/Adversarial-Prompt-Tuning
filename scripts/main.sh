@@ -1,6 +1,7 @@
 
 # custom config
-ROOT="/vhome/user/dataset"
+# ROOT="/vhome/user/dataset"
+ROOT="/home/bobzhou/dataset"
 TRAINER=AdvPT
 # oxford_flowers, oxford_pets, imagenet, food101, sun397, dtd, eurosat, ucf101
 DATASET=oxford_flowers
@@ -14,7 +15,8 @@ CSC=False  # class-specific context (False or True)
 D=$ROOT
 SEED=1
 
-DIR=/share/test/user/share1/new/${DATASET}/${TRAINER}/${CFG}/adv
+# DIR=/share/test/user/share1/new/${DATASET}/${TRAINER}/${CFG}/adv
+DIR=/home/bobzhou/results/${DATASET}/${TRAINER}/${CFG}/adv
 echo "--------------------------------------------------------------------------------------"
 python train.py \
 --root ${D} \
@@ -32,13 +34,13 @@ TRAINER.ADV.CSC ${CSC}
 
 
 
-echo "--------------------------------------------------------------------------------------"
-echo "zero shot"
-TRAINER=ZeroshotCLIP
-python train.py \
---root ${D} \
---trainer ${TRAINER} \
---dataset-config-file configs/datasets/${DATASET}.yaml \
---config-file configs/trainers/AdvPT/${CFG}.yaml \
---output-dir output/${TRAINER}/${CFG}/${DATASET} \
---eval-only
+# echo "--------------------------------------------------------------------------------------"
+# echo "zero shot"
+# TRAINER=ZeroshotCLIP
+# python train.py \
+# --root ${D} \
+# --trainer ${TRAINER} \
+# --dataset-config-file configs/datasets/${DATASET}.yaml \
+# --config-file configs/trainers/AdvPT/${CFG}.yaml \
+# --output-dir output/${TRAINER}/${CFG}/${DATASET} \
+# --eval-only
